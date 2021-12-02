@@ -1,0 +1,16 @@
+domain: hhiroshell.github.com
+layout:
+- go.kubebuilder.io/v3
+projectName: storage-bucket-prober
+repo: github.com/hhiroshell/storage-bucket-prober
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: hhiroshell.github.com
+  group: demo
+  kind: StorageBucket
+  path: github.com/hhiroshell/storage-bucket-prober/api/v1
+  version: v1
+version: "3"

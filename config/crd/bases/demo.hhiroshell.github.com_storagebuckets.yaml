@@ -1,0 +1,112 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.7.0
+  creationTimestamp: null
+  name: storagebuckets.demo.hhiroshell.github.com
+spec:
+  group: demo.hhiroshell.github.com
+  names:
+    kind: StorageBucket
+    listKind: StorageBucketList
+    plural: storagebuckets
+    singular: storagebucket
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.region
+      name: region
+      type: string
+    - jsonPath: .spec.bucket
+      name: bucket
+      type: string
+    - jsonPath: .spec.keyPrefix
+      name: key_Prefix
+      type: string
+    - jsonPath: .status.available
+      name: available
+      type: string
+    - format: date
+      jsonPath: .status.lastProbeTime
+      name: last_probe_time
+      type: string
+    name: v1
+    schema:
+      openAPIV3Schema:
+        description: StorageBucket is the Schema for the StorageBucket API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: StorageBucketSpec defines the desired state of StorageBucket
+            properties:
+              bucket:
+                description: The bucket name.
+                type: string
+              keyPrefix:
+                description: All objects stored in the bucket will have keys those
+                  start with this prefix. It is assumed to set a string that identifies
+                  the deployment environment of Phalanks. Default value is "phalanks".
+                type: string
+              region:
+                description: The datacenter region of the storage bucket.
+                type: string
+              secret:
+                description: Secret refers to a secret resource that contains credentials
+                  for accessing a storage bucket.
+                properties:
+                  secretKey:
+                    description: SecretKey
+                    properties:
+                      accessKeyId:
+                        description: AccessKeyId is the key name of the secret that
+                          will be used as AWS_ACCESS_KEY_ID.
+                        type: string
+                      secretAccessKey:
+                        description: SecretAccessKey is the key name of the secret
+                          that will be used as AWS_SECRET_ACCESS_KEY.
+                        type: string
+                    type: object
+                  secretName:
+                    description: SecretRef refers to a secret resource that contains
+                      credentials for accessing a storage bucket.
+                    type: string
+                type: object
+            type: object
+          status:
+            description: StorageBucketStatus defines the observed state of a StorageBucket.
+            properties:
+              available:
+                description: Available indicates whether the storage bucket is available
+                  or not.
+                type: boolean
+              lastProbeTime:
+                description: LastProbeTime is the time when the current state was
+                  observed.
+                format: date-time
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

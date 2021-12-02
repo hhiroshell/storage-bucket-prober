@@ -1,0 +1,20 @@
+# permissions for end users to view storagebuckets.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: storagebucket-viewer-role
+rules:
+- apiGroups:
+  - demo.hhiroshell.github.com
+  resources:
+  - storagebuckets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - demo.hhiroshell.github.com
+  resources:
+  - storagebuckets/status
+  verbs:
+  - get

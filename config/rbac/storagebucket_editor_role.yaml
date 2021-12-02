@@ -1,0 +1,24 @@
+# permissions for end users to edit storagebuckets.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: storagebucket-editor-role
+rules:
+- apiGroups:
+  - demo.hhiroshell.github.com
+  resources:
+  - storagebuckets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - demo.hhiroshell.github.com
+  resources:
+  - storagebuckets/status
+  verbs:
+  - get
